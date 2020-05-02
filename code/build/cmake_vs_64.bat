@@ -18,12 +18,24 @@ setlocal
 
     :: Prepare the build...
     if not exist %CMAKE_INTERMEDIATE_DIR%\CMakeCache.txt (
-        call cmake -G Ninja -S %current_directory%\.. -B %CMAKE_INTERMEDIATE_DIR%
+        rem Original Windows build flags:
+        rem /DWIN32 /D_WINDOWS /W3 /GR /EHsc
+        set all_warnings_as_errors="/DWIN32 /D_WINDOWS /W4 /WX /GR /EHsc"
+
+        call cmake                      ^
+            -G Ninja                    ^
+            -S %current_directory%\..   ^
+            -B %CMAKE_INTERMEDIATE_DIR%
+            -DCMAKE_CXX_FLAGS=%all_warnings_as_errors%
     )
 
     :: ... and build
     pushd %CMAKE_INTERMEDIATE_DIR%
-        call ninja
+        :: To check the available configurations, visit your CMakeCache file
+        call cmake    ^
+            --build . ^
+            --config Debug
+
         if %errorlevel%==0 (
             echo Build output can be found at: %CMAKE_INTERMEDIATE_DIR%
         )
@@ -32,5 +44,5 @@ setlocal
 endlocal
 
 :: TODO: This script doesn't take into account different configurations, i.e.
-::       DEBUG, RELASE, RELWITHDEBINFO and MINSIZEREL. This should probably 
+::       DEBUG, RELASE, RELWITHDEBINFO and MINSIZEREL. This should probably
 ::       be adressed.
