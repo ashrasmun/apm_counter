@@ -20,7 +20,7 @@ setlocal
     if not exist %CMAKE_INTERMEDIATE_DIR%\CMakeCache.txt (
         rem Original Windows build flags:
         rem /DWIN32 /D_WINDOWS /W3 /GR /EHsc
-        set all_warnings_as_errors="/DWIN32 /D_WINDOWS /W4 /WX /GR /EHsc"
+        set all_warnings_as_errors="/DWIN32 /D_WINDOWS /W4 /WX /EHsc"
 
         call cmake                      ^
             -G Ninja                    ^
