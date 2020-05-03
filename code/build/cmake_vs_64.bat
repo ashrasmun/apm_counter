@@ -25,7 +25,7 @@ setlocal
         call cmake                      ^
             -G Ninja                    ^
             -S %current_directory%\..   ^
-            -B %CMAKE_INTERMEDIATE_DIR%
+            -B %CMAKE_INTERMEDIATE_DIR% ^
             -DCMAKE_CXX_FLAGS=%all_warnings_as_errors%
     )
 
