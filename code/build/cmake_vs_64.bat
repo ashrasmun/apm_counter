@@ -2,15 +2,15 @@
 
 :: This script invokes CMake with Ninja for Visual Studio, 64bit target
 
+:: Enabling Microsoft's cl.exe compiler
+:: One of the key environment variables for cl.exe is INCLUDE.
+:: It's a dumb check, but works.
+if not defined INCLUDE (
+    call "c:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Auxiliary\Build\vcvars64.bat"
+)
+
 setlocal
     set current_directory=%~dp0
-
-    :: Enabling Microsoft's cl.exe compiler
-    :: One of the key environment variables for cl.exe is INCLUDE.
-    :: It's a dumb check, but works.
-    if not defined INCLUDE (
-        call "c:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Auxiliary\Build\vcvars64.bat"
-    )
 
     :: In CMake, this is known as CMAKE_BINARY_DIR, but in fact it's
     :: a directory for intermediate files, as far as I understand.
